@@ -1,0 +1,4 @@
+#include <stdio.h>
+#define MC 12
+#define MV 5000
+int main(void){int c,v,count[MC+1]={0},valid=0,invalid=0;printf("Candidates: ");if(scanf("%d",&c)!=1||c<1||c>MC)return 1;printf("Votes: ");if(scanf("%d",&v)!=1||v<0||v>MV)return 1;for(int i=0;i<v;i++){int x;printf("Vote %d: ",i+1);if(scanf("%d",&x)!=1)return 1;if(x>=1&&x<=c){count[x]++;valid++;}else invalid++;}int order[MC],max=-1;for(int i=0;i<c;i++){order[i]=i+1;if(count[i+1]>max)max=count[i+1];}for(int i=0;i<c-1;i++)for(int j=0;j<c-1-i;j++)if(count[order[j]]<count[order[j+1]]){int t=order[j];order[j]=order[j+1];order[j+1]=t;}printf("Valid %d Invalid %d\n",valid,invalid);for(int i=0;i<c;i++)printf("Candidate %d: %d\n",order[i],count[order[i]]);int ties=0;for(int i=1;i<=c;i++)if(count[i]==max)ties++;if(ties>1)printf("Tie: %d votes\n",max);else printf("Winner: Candidate %d (%d votes)\n",order[0],max);return 0;}
